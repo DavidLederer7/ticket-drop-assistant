@@ -1,58 +1,41 @@
 # Ticket Drop Assistant
 
-Local macOS helper for fast Eventbrite ticket drops. This tool is intentionally limited to manual-assist behavior: countdown, notifications, clipboard helpers, browser launch, and optional page highlighting. It does not buy the ticket for you, submit payment, or click through checkout.
+Static ticket-drop helper for fast Eventbrite releases. It is designed to work on GitHub Pages with no backend and no database. Each user enters their email, promo code, and UNI or school ID in the browser, and those values are saved only in that browser on that device. Refreshing the page on the same device/browser keeps them there.
 
 ## Files
 
-- `senior_cruise_assistant.py`: Python entry point.
-- `senior_cruise_config.json`: Local config, created automatically on first run.
-- `dashboard/index.html`: Local dashboard with countdown, copy buttons, and checklist.
+- `index.html`: GitHub Pages app with countdown, links, and local browser storage.
+- `dashboard/index.html`: older local dashboard version.
 - `helper/eventbrite_helper.js`: Optional helper that highlights relevant fields on the Eventbrite page.
 - `Test Ticket Assistant.command`: Double-click to run a dry test and open the dashboard in Google Chrome.
 - `Run Ticket Assistant.command`: Double-click to start the live assistant.
 
-## Run
+## GitHub Pages
+
+1. Push this repo to GitHub.
+2. Open your repo on GitHub.
+3. Go to `Settings` > `Pages`.
+4. Under `Build and deployment`, choose `Deploy from a branch`.
+5. Choose branch `main` and folder `/ (root)`.
+6. Save.
+7. GitHub will publish the site at a URL like `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`.
+
+## How It Works
+
+- A user opens the GitHub Pages site.
+- They enter their email, promo code, and UNI or school ID.
+- After an email is entered, the page auto-saves those values in browser local storage under that email.
+- Returning on the same browser and device reloads their saved values automatically.
+- There is no shared database and no server-side account system.
+
+## Local Mac Flow
+
+If you still want the Mac launcher version:
 
 ```bash
 python3 senior_cruise_assistant.py --dry-run
 python3 senior_cruise_assistant.py --open-now
 ```
-
-Recommended first run:
-
-1. Double-click `Test Ticket Assistant.command`
-2. Enter your promo code and UNI or school ID directly in the dashboard
-3. Make sure the event page and dashboard both open correctly in Google Chrome
-4. Double-click `Run Ticket Assistant.command` on the day of the drop
-
-If you prefer Terminal, these commands still work:
-
-```bash
-python3 senior_cruise_assistant.py --dry-run
-python3 senior_cruise_assistant.py --open-now
-```
-
-Default behavior:
-
-- starts a local server at `http://127.0.0.1:8765`
-- prints the preflight checklist in the terminal
-- opens the dashboard and Eventbrite page at `T-120s`
-- opens a backup Eventbrite tab at `T-15s`
-- sends macOS notifications at `T-5m`, `T-1m`, `T-10s`, and `T=0`
-- copies the promo code to the clipboard when the primary open event fires, if one is set
-
-## Config
-
-On first run, the script writes `senior_cruise_config.json`. Adjust only if needed:
-
-- `preferred_browser`: fixed to `"Google Chrome"` by default.
-- `notification_offsets`: notification schedule in seconds before the drop.
-- `primary_open_offset_seconds`: when to open the main event page.
-- `backup_open_offset_seconds`: when to open a backup tab.
-- `promo_code`: optional, can also be typed directly into the dashboard
-- `uni`: optional, can also be typed directly into the dashboard
-
-The default config is generic and safe to share.
 
 ## Optional Eventbrite Helper
 
@@ -68,12 +51,12 @@ The helper never clicks anything and does not bypass CAPTCHAs or platform restri
 
 Simplest options:
 
-1. GitHub: make the repo public or share the private repo with specific people. They can clone it and use the dashboard with their own details.
+1. GitHub Pages: share the published site URL and users can use it immediately in the browser.
 2. ZIP file: click `Code` on GitHub, choose `Download ZIP`, and send that ZIP to people directly.
 
-Best GitHub workflow for other users:
+Best GitHub Pages workflow for other users:
 
-1. Share the repo link.
-2. Tell them to download the repo or run `git clone`.
-3. Tell them to double-click `Test Ticket Assistant.command`.
-4. On the day of the drop, they should double-click `Run Ticket Assistant.command`.
+1. Share the published site URL.
+2. Tell users to enter their email, promo code, and UNI or school ID.
+3. Tell them the page auto-saves on the same browser and device.
+4. On the same device and browser, their values will still be there next time.

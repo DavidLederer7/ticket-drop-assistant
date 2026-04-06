@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Senior Boat Cruise 2026</title>
+    <style>
+      :root {
+        --bg: #f5efe3;
+        --ink: #12212f;
+        --muted: #5d6a73;
+        --accent: #c04a2f;
+        --accent-2: #0f6a6d;
+        --panel: rgba(255, 255, 255, 0.82);
+        --border: rgba(18, 33, 47, 0.12);
+        --success: #0c7a43;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(192, 74, 47, 0.18), transparent 32%),
+          radial-gradient(circle at top right, rgba(15, 106, 109, 0.16), transparent 26%),
+          linear-gradient(180deg, #efe4d1, var(--bg));
+        min-height: 100vh;
+      }
+
+      main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 32px 20px 40px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 18px 40px rgba(18, 33, 47, 0.08);
+      }
+
+      h1,
+      h2 {
+        margin: 0 0 12px;
+        line-height: 1;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 6vw, 4.8rem);
+        letter-spacing: -0.06em;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(15, 106, 109, 0.12);
+        color: var(--accent-2);
+        font-size: 0.84rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .lede {
+        max-width: 54ch;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        background: rgba(18, 33, 47, 0.06);
+      }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .segment {
+        padding: 18px 14px;
+        border-radius: 18px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(18, 33, 47, 0.08);
+      }
+
+      .segment strong {
+        display: block;
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+        letter-spacing: -0.06em;
+      }
+
+      .segment span {
+        font-size: 0.82rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .field {
+        margin-top: 14px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .value-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      input[type="email"],
+      input[type="text"] {
+        width: 100%;
+        border: 1px solid rgba(18, 33, 47, 0.14);
+        border-radius: 14px;
+        padding: 14px 16px;
+        font: inherit;
+        background: white;
+      }
+
+      .mono {
+        font-family: "SFMono-Regular", ui-monospace, Menlo, monospace;
+      }
+
+      button,
+      .link-button {
+        border: 0;
+        border-radius: 14px;
+        padding: 14px 16px;
+        font: inherit;
+        cursor: pointer;
+        background: var(--accent);
+        color: white;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .link-button.alt,
+      button.alt {
+        background: var(--accent-2);
+      }
+
+      .status {
+        min-height: 1.2em;
+        font-size: 0.92rem;
+        color: var(--accent-2);
+      }
+
+      .status.success {
+        color: var(--success);
+      }
+
+      .checklist {
+        padding-left: 20px;
+        line-height: 1.6;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .timeline div {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(18, 33, 47, 0.08);
+      }
+
+      .banner {
+        margin-bottom: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(15, 106, 109, 0.12);
+        border: 1px solid rgba(15, 106, 109, 0.22);
+        color: var(--accent-2);
+        font-weight: 600;
+      }
+
+      .hint {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .columns {
+          grid-template-columns: 1fr;
+        }
+
+        .countdown {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .value-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="banner">This site stores your email, promo code, and UNI only in this browser on this device.</div>
+
+      <section class="hero">
+        <div class="card">
+          <div class="eyebrow">GitHub Pages Assistant</div>
+          <h1 id="title">Senior Boat Cruise 2026</h1>
+          <p class="lede">
+            Open this page on any device, enter your info once, and it will stay saved in this browser for the same email on the same device.
+          </p>
+          <div class="pill"><span id="drop-text"></span></div>
+          <div class="countdown">
+            <div class="segment"><strong id="days">0</strong><span>Days</span></div>
+            <div class="segment"><strong id="hours">0</strong><span>Hours</span></div>
+            <div class="segment"><strong id="minutes">0</strong><span>Minutes</span></div>
+            <div class="segment"><strong id="seconds">0</strong><span>Seconds</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Your Profile</h2>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Enter your email" />
+          </div>
+          <div class="field">
+            <label for="promo-code">Promo Code</label>
+            <div class="value-row">
+              <input id="promo-code" type="text" class="mono" placeholder="Enter promo code" />
+              <button data-copy-target="promo-code">Copy</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="uni">UNI / School ID</label>
+            <div class="value-row">
+              <input id="uni" type="text" class="mono" placeholder="Enter UNI or school ID" />
+              <button data-copy-target="uni">Copy</button>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="status" id="profile-status"></div>
+            <div class="value-row">
+              <button id="clear-profile" class="alt">Clear Saved Values</button>
+            </div>
+            <div class="hint">
+              Values save automatically on this device after you enter an email. Switching to a different email on this device loads that email’s saved values, if any.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stack">
+        <div class="columns">
+          <div class="card">
+            <h2>Quick Actions</h2>
+            <div class="stack">
+              <a id="event-link" class="link-button" target="_blank" rel="noreferrer">Open Event Page</a>
+              <a id="organizer-link" class="link-button alt" target="_blank" rel="noreferrer">Open Organizer Page</a>
+              <div class="status" id="clipboard-status"></div>
+            </div>
+          </div>
+          <div class="card">
+            <h2>Preflight</h2>
+            <ol class="checklist">
+              <li>Stay signed into the correct Eventbrite account.</li>
+              <li>Confirm card and billing autofill are already stored.</li>
+              <li>Keep the promo code and UNI or school ID copied from this page.</li>
+              <li>Open the ticket page by 4:58 PM EDT.</li>
+              <li>Do not attempt to buy more than one ticket.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h2>Drop Sequence</h2>
+            <ol class="checklist">
+              <li>Refresh the event page at drop.</li>
+              <li>Apply the promo code if required.</li>
+              <li>Select one ticket.</li>
+              <li>Enter your UNI or school ID if prompted.</li>
+              <li>Proceed through checkout and confirm manually.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="card">
+            <h2>Timing</h2>
+            <div class="timeline">
+              <div><span>T-5m</span><span>Final login and autofill check</span></div>
+              <div><span>T-1m</span><span>Stay on the event page</span></div>
+              <div><span>T-10s</span><span>Cursor ready, prepare to refresh</span></div>
+              <div><span>T=0</span><span>Refresh and proceed manually</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <h2>How It Saves</h2>
+          <p class="lede">
+            This site uses your browser’s local storage only. There is no server database, and your values stay on the same device and browser even after a page refresh.
+          </p>
+          </div>
+          <div class="card">
+            <h2>Limit</h2>
+            <p class="lede">
+              This page does not buy tickets automatically. It is only a manual-assist dashboard for timing, links, and copy-ready values.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const state = {
+        title: "Senior Boat Cruise 2026",
+        eventUrl: "https://www.eventbrite.com/e/senior-boat-cruise-2026-tickets-1977314485855?aff=oddtdtcreator&keep_tld=true",
+        organizerUrl: "https://www.eventbrite.com/",
+        dropIso: "2026-04-06T17:00:00-04:00",
+        timezone: "America/New_York",
+      };
+
+      const storageKeys = {
+        lastEmail: "ticket-drop:last-email",
+        profiles: "ticket-drop:profiles",
+      };
+
+      const elements = {
+        title: document.getElementById("title"),
+        dropText: document.getElementById("drop-text"),
+        days: document.getElementById("days"),
+        hours: document.getElementById("hours"),
+        minutes: document.getElementById("minutes"),
+        seconds: document.getElementById("seconds"),
+        email: document.getElementById("email"),
+        promoCode: document.getElementById("promo-code"),
+        uni: document.getElementById("uni"),
+        eventLink: document.getElementById("event-link"),
+        organizerLink: document.getElementById("organizer-link"),
+        clipboardStatus: document.getElementById("clipboard-status"),
+        profileStatus: document.getElementById("profile-status"),
+        clearProfile: document.getElementById("clear-profile"),
+      };
+
+      elements.title.textContent = state.title;
+      elements.eventLink.href = state.eventUrl;
+      elements.organizerLink.href = state.organizerUrl;
+
+      const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: state.timezone,
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZoneName: "short",
+      });
+
+      const dropDate = new Date(state.dropIso);
+      elements.dropText.textContent = `Drop: ${formatter.format(dropDate)}`;
+
+      function normalizeEmail(value) {
+        return value.trim().toLowerCase();
+      }
+
+      function readProfiles() {
+        try {
+          return JSON.parse(localStorage.getItem(storageKeys.profiles) || "{}");
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function writeProfiles(profiles) {
+        localStorage.setItem(storageKeys.profiles, JSON.stringify(profiles));
+      }
+
+      function showProfileStatus(message, success = false) {
+        elements.profileStatus.textContent = message;
+        elements.profileStatus.classList.toggle("success", success);
+      }
+
+      function loadProfile(email) {
+        const normalized = normalizeEmail(email);
+        const profiles = readProfiles();
+        const profile = profiles[normalized] || { promoCode: "", uni: "" };
+        elements.promoCode.value = profile.promoCode || "";
+        elements.uni.value = profile.uni || "";
+        if (normalized) {
+          localStorage.setItem(storageKeys.lastEmail, normalized);
+          showProfileStatus(profile.promoCode || profile.uni ? `Loaded saved values for ${normalized}.` : `No saved values yet for ${normalized}.`);
+        } else {
+          showProfileStatus("Enter your email to save values on this device.");
+        }
+      }
+
+      function saveProfile(showMessage = true) {
+        const email = normalizeEmail(elements.email.value);
+        if (!email) {
+          if (showMessage) {
+            showProfileStatus("Enter your email before values can be saved.");
+          }
+          return;
+        }
+        const profiles = readProfiles();
+        profiles[email] = {
+          promoCode: elements.promoCode.value.trim(),
+          uni: elements.uni.value.trim(),
+          updatedAt: new Date().toISOString(),
+        };
+        writeProfiles(profiles);
+        localStorage.setItem(storageKeys.lastEmail, email);
+        if (showMessage) {
+          showProfileStatus(`Saved on this device for ${email}.`, true);
+        }
+      }
+
+      function clearProfile() {
+        const email = normalizeEmail(elements.email.value);
+        if (!email) {
+          showProfileStatus("Enter your email before clearing saved values.");
+          return;
+        }
+        const profiles = readProfiles();
+        delete profiles[email];
+        writeProfiles(profiles);
+        elements.promoCode.value = "";
+        elements.uni.value = "";
+        showProfileStatus(`Cleared saved values for ${email}.`, true);
+      }
+
+      function describeStatus(totalSeconds) {
+        if (totalSeconds <= 0) {
+          return "Tickets should be live. Refresh the page and move through checkout manually.";
+        }
+        if (totalSeconds <= 10) {
+          return "T-10 seconds. Keep the ticket tab focused and your cursor ready.";
+        }
+        if (totalSeconds <= 60) {
+          return "Less than a minute left. Stay on the Eventbrite page.";
+        }
+        if (totalSeconds <= 300) {
+          return "Final five minutes. Confirm login, billing autofill, and copied code.";
+        }
+        return "Before T-2 minutes: confirm Eventbrite login, card autofill, and browser focus.";
+      }
+
+      function renderCountdown() {
+        const now = new Date();
+        const totalSeconds = Math.max(0, Math.floor((dropDate.getTime() - now.getTime()) / 1000));
+
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        elements.days.textContent = String(days);
+        elements.hours.textContent = String(hours).padStart(2, "0");
+        elements.minutes.textContent = String(minutes).padStart(2, "0");
+        elements.seconds.textContent = String(seconds).padStart(2, "0");
+        elements.clipboardStatus.textContent = describeStatus(Math.floor((dropDate.getTime() - now.getTime()) / 1000));
+      }
+
+      async function copyValue(targetId) {
+        const input = document.getElementById(targetId);
+        const value = input.value.trim();
+        if (!value) {
+          elements.clipboardStatus.textContent = `Enter a value in ${targetId === "uni" ? "UNI / ID" : "Promo Code"} first.`;
+          return;
+        }
+        input.select();
+        input.setSelectionRange(0, value.length);
+        try {
+          await navigator.clipboard.writeText(value);
+          elements.clipboardStatus.textContent = `${value} copied to clipboard.`;
+        } catch (error) {
+          document.execCommand("copy");
+          elements.clipboardStatus.textContent = `${value} selected for copy.`;
+        }
+      }
+
+      const lastEmail = localStorage.getItem(storageKeys.lastEmail) || "";
+      elements.email.value = lastEmail;
+      loadProfile(lastEmail);
+
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => copyValue(button.dataset.copyTarget));
+      });
+
+      elements.email.addEventListener("change", () => loadProfile(elements.email.value));
+      elements.email.addEventListener("input", () => {
+        const normalized = normalizeEmail(elements.email.value);
+        if (normalized) {
+          localStorage.setItem(storageKeys.lastEmail, normalized);
+          showProfileStatus(`Using ${normalized} on this device.`);
+        } else {
+          showProfileStatus("Enter your email to save values on this device.");
+        }
+      });
+      elements.promoCode.addEventListener("input", () => saveProfile(false));
+      elements.uni.addEventListener("input", () => saveProfile(false));
+      elements.clearProfile.addEventListener("click", clearProfile);
+
+      renderCountdown();
+      setInterval(renderCountdown, 1000);
+    </script>
+  </body>
+</html>
