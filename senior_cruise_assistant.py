@@ -56,14 +56,14 @@ class Config:
 
 
 DEFAULT_CONFIG = {
-    "event_title": "Eventbrite Ticket Drop",
-    "event_url": "https://www.eventbrite.com/",
+    "event_title": "Senior Boat Cruise 2026",
+    "event_url": "https://www.eventbrite.com/e/senior-boat-cruise-2026-tickets-1977314485855?aff=oddtdtcreator&keep_tld=true",
     "organizer_url": "https://www.eventbrite.com/",
     "drop_iso": "2026-04-06T17:00:00-04:00",
     "timezone": "America/New_York",
     "promo_code": "",
     "uni": "",
-    "preferred_browser": None,
+    "preferred_browser": "Google Chrome",
     "notification_offsets": [300, 60, 10, 0],
     "primary_open_offset_seconds": 120,
     "backup_open_offset_seconds": 15,
@@ -126,6 +126,7 @@ def build_dashboard_html(config: Config, port: int) -> str:
             "timezone": config.timezone,
             "promo_code": config.promo_code,
             "uni": config.uni,
+            "test_mode": "0",
             "primary_open_offset_seconds": str(config.primary_open_offset_seconds),
             "backup_open_offset_seconds": str(config.backup_open_offset_seconds),
             "refresh_warning_offset_seconds": str(config.refresh_warning_offset_seconds),
@@ -134,7 +135,7 @@ def build_dashboard_html(config: Config, port: int) -> str:
     return f"http://127.0.0.1:{port}/dashboard/index.html?{query}"
 
 
-def build_dashboard_file(config: Config) -> str:
+def build_dashboard_file(config: Config, test_mode: bool = False) -> str:
     template = (ROOT / "dashboard" / "index.html").read_text(encoding="utf-8")
     bootstrap = {
         "title": config.event_title,
@@ -144,11 +145,13 @@ def build_dashboard_file(config: Config) -> str:
         "timezone": config.timezone,
         "promoCode": config.promo_code,
         "uni": config.uni,
+        "testMode": test_mode,
     }
-    injected = template.replace(
-        'const params = new URLSearchParams(window.location.search);\n      const state = {\n        title: params.get("title") || "Senior Cruise",\n        eventUrl: params.get("event_url") || "#",\n        organizerUrl: params.get("organizer_url") || "#",\n        dropIso: params.get("drop_iso"),\n        timezone: params.get("timezone") || "America/New_York",\n        promoCode: params.get("promo_code") || "",\n        uni: params.get("uni") || "",\n      };',
-        f"const state = {json.dumps(bootstrap)};",
-    )
+    marker = "<script>"
+    bootstrap_script = f"<script>\n      window.__TICKET_DROP_BOOTSTRAP__ = {json.dumps(bootstrap)};\n    </script>\n    <script>"
+    if marker not in template:
+        raise ValueError("Dashboard template is missing expected script tag.")
+    injected = template.replace(marker, bootstrap_script, 1)
     temp_path = pathlib.Path(tempfile.gettempdir()) / "senior_cruise_dashboard.html"
     temp_path.write_text(injected, encoding="utf-8")
     return temp_path.as_uri()
@@ -279,31 +282,14 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def prompt(current: str | None, label: str, placeholder: str) -> str:
-    suffix = f" [{current}]" if current else ""
-    response = input(f"{label}{suffix}: ").strip()
-    if response:
-        return response
-    if current:
-        return current
-    return placeholder
-
-
 def interactive_setup() -> Config:
     ensure_config()
     data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-    print("Enter the values you want to use. Press Enter to keep the current value.")
-    data["event_title"] = prompt(data.get("event_title"), "Event title", DEFAULT_CONFIG["event_title"])
-    data["event_url"] = prompt(data.get("event_url"), "Event URL", DEFAULT_CONFIG["event_url"])
-    data["organizer_url"] = prompt(data.get("organizer_url"), "Organizer URL", data["event_url"])
-    data["drop_iso"] = prompt(data.get("drop_iso"), "Drop time ISO", DEFAULT_CONFIG["drop_iso"])
-    data["timezone"] = prompt(data.get("timezone"), "Timezone", DEFAULT_CONFIG["timezone"])
-    data["promo_code"] = prompt(data.get("promo_code"), "Promo code", "")
-    data["uni"] = prompt(data.get("uni"), "UNI or school ID", "")
-    browser_placeholder = data.get("preferred_browser") or ""
-    data["preferred_browser"] = prompt(browser_placeholder, "Preferred browser app name", "")
-    if not data["preferred_browser"]:
-        data["preferred_browser"] = None
+    data["promo_code"] = ""
+    data["uni"] = ""
+    data["drop_iso"] = DEFAULT_CONFIG["drop_iso"]
+    data["timezone"] = DEFAULT_CONFIG["timezone"]
+    data["preferred_browser"] = DEFAULT_CONFIG["preferred_browser"]
     CONFIG_PATH.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     print(f"Saved config to {CONFIG_PATH}")
     return Config(**data)
@@ -314,13 +300,22 @@ def main() -> int:
     config = interactive_setup() if args.setup else load_config()
     server = None
 
-    try:
-        server = start_server(args.port)
-        dashboard_url = build_dashboard_html(config, args.port)
-    except OSError:
-        dashboard_url = build_dashboard_file(config)
+    if args.setup or args.dry_run:
+        dashboard_url = build_dashboard_file(config, test_mode=args.dry_run)
+    else:
+        try:
+            server = start_server(args.port)
+            dashboard_url = build_dashboard_html(config, args.port)
+        except OSError:
+            dashboard_url = build_dashboard_file(config, test_mode=args.dry_run)
 
     print_preflight(config, dashboard_url)
+
+    if args.setup:
+        open_url(dashboard_url, config.preferred_browser)
+        open_url(config.event_url, config.preferred_browser)
+        print("Setup opened the dashboard and event page in your browser.")
+        return 0
 
     if args.open_now:
         open_url(dashboard_url, config.preferred_browser)

@@ -10,24 +10,24 @@ This tool is for **Mac users**. It helps you get ready for a fast Eventbrite tic
 4. Open the ZIP file after it downloads.
 5. Open the unzipped folder.
 
-## First-Time Setup
+## First-Time Test
 
-1. Double-click `Setup Ticket Assistant.command`
-2. Enter:
-   - the Eventbrite event link, if you need to change the prefilled one
-   - the ticket drop time, if you need to change the prefilled one
-   - your promo code, if you have one
-   - your UNI or school ID, if needed
-3. When setup finishes, close the window.
+1. Double-click `Test Ticket Assistant.command`
+2. It should open the dashboard and the Eventbrite page in Google Chrome.
+3. Enter your promo code and UNI or school ID directly into the dashboard.
+4. Use the `Copy` buttons when you need those values.
 
 By default, the tool is already set for:
 - Event: `Senior Boat Cruise 2026`
+- Event link: `https://www.eventbrite.com/e/senior-boat-cruise-2026-tickets-1977314485855?aff=oddtdtcreator&keep_tld=true`
 - Drop time: `Monday, April 6, 2026 at 5:00 PM EDT`
+- Timezone: `America/New_York`
+- Browser: `Google Chrome`
 
 ## Test It
 
-1. Double-click `Test Ticket Assistant.command`
-2. Make sure it shows the countdown and setup details correctly.
+1. Make sure the dashboard and event page both open correctly.
+2. Make sure the copy buttons work with the values you entered.
 3. Close the window when you are done.
 
 ## Use It On Ticket Day
