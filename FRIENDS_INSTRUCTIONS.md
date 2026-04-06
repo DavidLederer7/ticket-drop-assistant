@@ -14,11 +14,15 @@ This tool is for **Mac users**. It helps you get ready for a fast Eventbrite tic
 
 1. Double-click `Setup Ticket Assistant.command`
 2. Enter:
-   - the Eventbrite event link
-   - the ticket drop time
+   - the Eventbrite event link, if you need to change the prefilled one
+   - the ticket drop time, if you need to change the prefilled one
    - your promo code, if you have one
    - your UNI or school ID, if needed
 3. When setup finishes, close the window.
+
+By default, the tool is already set for:
+- Event: `Senior Boat Cruise 2026`
+- Drop time: `Monday, April 6, 2026 at 5:00 PM EDT`
 
 ## Test It
 

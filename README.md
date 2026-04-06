@@ -23,7 +23,7 @@ python3 senior_cruise_assistant.py --open-now
 Recommended first run:
 
 1. Double-click `Setup Ticket Assistant.command`
-2. Paste the Eventbrite URL, drop time, promo code, and your UNI or school ID
+2. The ticket link and drop time are already prefilled for Monday, April 6, 2026 at 5:00 PM EDT. Enter your promo code and your UNI or school ID
 3. Double-click `Test Ticket Assistant.command`
 4. Double-click `Run Ticket Assistant.command` on the day of the drop
 
